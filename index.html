@@ -1,4 +1,4 @@
-h<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nl">
 
 <head>
@@ -82,7 +82,9 @@ h<!DOCTYPE html>
       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-    // Firebase instellingen
+    // =========================
+    // FIREBASE
+    // =========================
 
     const firebaseConfig = {
 
@@ -114,56 +116,68 @@ h<!DOCTYPE html>
     const eventRef = ref(database, "event");
 
 
-    // Muziek uit GitHub
+    // =========================
+    // MUZIEK
+    // =========================
 
-    const muziek = document.getElementById("muziek");
+    const muziek =
+      document.getElementById("muziek");
 
-    Muziek.src =
-      "https://30junk.github.io/58-Facetten-19/muziek.mp3";
+    muziek.src =
+      "https://30junk.github.io/58-Facetten-19/Muziek.mp3";
 
 
-    const knop = document.getElementById("meedoen");
+    // =========================
+    // ELEMENTEN
+    // =========================
 
-    const status = document.getElementById("status");
+    const knop =
+      document.getElementById("meedoen");
+
+    const status =
+      document.getElementById("status");
 
 
     let meegedaan = false;
 
 
+    // =========================
     // IK DOE MEE
+    // =========================
 
     knop.addEventListener("click", async function() {
 
       meegedaan = true;
 
+      // Muziek stil laten horen
       muziek.volume = 0;
 
       try {
 
-        muziek.volume = 0;
+        // Browser krijgt toestemming voor audio
+        await muziek.play();
 
-await muziek.play();
-
-status.innerHTML =
-  "🟢 Je doet mee!<br>Wachten op Anne...";
-
-knop.style.display = "none";
         status.innerHTML =
-          "🟢 Je doet mee!<br>Wachten op Anne...";
+          "🟢 Je doet mee!<br>" +
+          "Wachten op Anne...";
 
         knop.style.display = "none";
 
       } catch (error) {
 
+        console.error(error);
+
         status.innerHTML =
-          "🔴 Muziek kon niet worden geladen.";
+          "🔴 Muziek kan niet worden gestart.";
 
       }
 
     });
 
 
-    // Luisteren naar Firebase
+    // =========================
+    // LUISTEREN NAAR FIREBASE
+    // =========================
 
     onValue(eventRef, function(snapshot) {
 
@@ -174,8 +188,14 @@ knop.style.display = "none";
       }
 
 
-      if (data.command === "start" && data.startAt) {
+      // Anne heeft START gedrukt
+      if (
+        data.command === "start" &&
+        data.startAt
+      ) {
 
+
+        // Deze deelnemer heeft nog niet meegedaan
         if (!meegedaan) {
 
           status.innerHTML =
@@ -195,25 +215,13 @@ knop.style.display = "none";
           "🟢 Klaar... 🎵";
 
 
-        setTimeout(async function() {
+        setTimeout(function() {
 
-          muziek.currentTime = 0;
-
+          // Muziek hoorbaar maken
           muziek.volume = 1;
 
-          try {
-
-            await muziek.play();
-
-            status.innerHTML =
-              "🎵 58 Facetten 19 speelt!";
-
-          } catch (error) {
-
-            status.innerHTML =
-              "🔴 Muziek kon niet starten.";
-
-          }
+          status.innerHTML =
+            "🎵 58 Facetten 19 speelt!";
 
         }, Math.max(0, wachten));
 
