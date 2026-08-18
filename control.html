@@ -85,10 +85,13 @@ const eventRef = ref(database, "event");
 
 document.getElementById("start").addEventListener("click", async () => {
 
-  await set(eventRef, {
-    command: "start",
-    time: Date.now()
-  });
+const startAt = Date.now() + 5000;
+
+await set(eventRef, {
+  command: "start",
+  startAt: startAt,
+  time: Date.now()
+});  
 
   document.getElementById("status").innerHTML =
     "🟢 START verzonden!";
