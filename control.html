@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>58 Facetten 19 - Bediening</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px 20px;
+      background: #f5f5f5;
+    }
+
+    .kaart {
+      max-width: 500px;
+      margin: auto;
+      padding: 30px 20px;
+      background: white;
+      border-radius: 20px;
+    }
+
+    button {
+      font-size: 24px;
+      padding: 20px 40px;
+      margin: 20px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    #start {
+      background: #4caf50;
+      color: white;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="kaart">
+
+  <h1>🎵 58 Facetten 19</h1>
+
+  <h2>Bediening Anne</h2>
+
+  <button id="start">▶️ START</button>
+
+  <div id="status">
+    Klaar om te starten
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCudK8M09UAQFVWtRZIkGo2un_-hLDGW0o",
+  authDomain: "facetten-19.firebaseapp.com",
+  databaseURL: "https://facetten-19-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "facetten-19",
+  storageBucket: "facetten-19.firebasestorage.app",
+  messagingSenderId: "979120531869",
+  appId: "1:979120531869:web:911d29ddd82d34bf41a774"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+const eventRef = ref(database, "event");
+
+document.getElementById("start").addEventListener("click", async () => {
+
+  await set(eventRef, {
+    command: "start",
+    time: Date.now()
+  });
+
+  document.getElementById("status").innerHTML =
+    "🟢 START verzonden!";
+});
+
+</script>
+
+</body>
+</html>
