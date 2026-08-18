@@ -140,12 +140,14 @@ h<!DOCTYPE html>
 
       try {
 
-        await muziek.play();
+        muziek.volume = 0;
 
-        muziek.pause();
+await muziek.play();
 
-        muziek.currentTime = 0;
+status.innerHTML =
+  "🟢 Je doet mee!<br>Wachten op Anne...";
 
+knop.style.display = "none";
         status.innerHTML =
           "🟢 Je doet mee!<br>Wachten op Anne...";
 
