@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>58 Facetten 19 - Bediening</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -20,85 +23,134 @@
       border-radius: 20px;
     }
 
-    button {
-      font-size: 24px;
-      padding: 20px 40px;
-      margin: 20px;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
+    h1 {
+      font-size: 32px;
     }
 
-    #start {
+    button {
+      font-size: 26px;
+      padding: 20px 40px;
+      margin: 30px 0;
+      border: none;
+      border-radius: 15px;
       background: #4caf50;
       color: white;
     }
 
     #status {
+      font-size: 21px;
       margin-top: 20px;
-      font-size: 20px;
     }
   </style>
 </head>
 
 <body>
 
-<div class="kaart">
+  <div class="kaart">
 
-  <h1>🎵 58 Facetten 19</h1>
+    <h1>🎵 58 Facetten 19</h1>
 
-  <h2>Bediening Anne</h2>
+    <h2>Bediening Anne</h2>
 
-  <button id="start">▶️ START</button>
+    <button id="start">
+      ▶️ START
+    </button>
 
-  <div id="status">
-    Klaar om te starten
+    <div id="status">
+      Klaar om te starten
+    </div>
+
   </div>
 
-</div>
 
-<script type="module">
+  <script type="module">
 
-import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import {
-  getDatabase,
-  ref,
-  set
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import {
+      getDatabase,
+      ref,
+      set
+    }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCudK8M09UAQFVWtRZIkGo2un_-hLDGW0o",
-  authDomain: "facetten-19.firebaseapp.com",
-  databaseURL: "https://facetten-19-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "facetten-19",
-  storageBucket: "facetten-19.firebasestorage.app",
-  messagingSenderId: "979120531869",
-  appId: "1:979120531869:web:911d29ddd82d34bf41a774"
-};
 
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+    // Firebase instellingen
 
-const eventRef = ref(database, "event");
+    const firebaseConfig = {
 
-document.getElementById("start").addEventListener("click", async () => {
+      apiKey: "AIzaSyCudK8M09UAQFVWtRZIkGo2un_-hLDGW0o",
 
-const startAt = Date.now() + 5000;
+      authDomain: "facetten-19.firebaseapp.com",
 
-await set(eventRef, {
-  command: "start",
-  startAt: startAt,
-  time: Date.now()
-});
- 
+      databaseURL:
+        "https://facetten-19-default-rtdb.europe-west1.firebasedatabase.app",
 
-  document.getElementById("status").innerHTML =
-    "🟢 START verzonden!";
-});
+      projectId: "facetten-19",
 
-</script>
+      storageBucket:
+        "facetten-19.firebasestorage.app",
+
+      messagingSenderId:
+        "979120531869",
+
+      appId:
+        "1:979120531869:web:911d29ddd82d34bf41a774"
+
+    };
+
+
+    // Firebase starten
+
+    const app = initializeApp(firebaseConfig);
+
+    const database = getDatabase(app);
+
+
+    // Verwijzing naar event
+
+    const eventRef = ref(database, "event");
+
+
+    // START-knop
+
+    document
+      .getElementById("start")
+      .addEventListener("click", async () => {
+
+
+        // Startmoment = 5 seconden vanaf nu
+
+        const startAt = Date.now() + 5000;
+
+
+        // Gegevens naar Firebase sturen
+
+        await set(eventRef, {
+
+          command: "start",
+
+          startAt: startAt,
+
+          time: Date.now()
+
+        });
+
+
+        // Melding op het scherm
+
+        document
+          .getElementById("status")
+          .innerHTML =
+          "🟢 START verzonden!<br>" +
+          "🎵 Muziek begint over 5 seconden.";
+
+
+      });
+
+  </script>
 
 </body>
+
 </html>
