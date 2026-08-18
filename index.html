@@ -1,111 +1,21 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>58 Facetten 19</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 30px 20px;
-      background: #f5f5f5;
-    }
-
-    .kaart {
-      max-width: 500px;
-      margin: auto;
-      padding: 30px 20px;
-      background: white;
-      border-radius: 20px;
-    }
-
-    h1 {
-      font-size: 32px;
-    }
-
-    button {
-      font-size: 24px;
-      padding: 20px 30px;
-      margin: 25px 0;
-      border: none;
-      border-radius: 15px;
-      background: #2196f3;
-      color: white;
-    }
-
-    #status {
-      font-size: 21px;
-      font-weight: bold;
-      margin: 25px 0;
-    }
-  </style>
 </head>
 
 <body>
 
-  <div class="kaart">
+<h1>🎵 58 Facetten 19</h1>
 
-    <h1>🎵 58 Facetten 19</h1>
+<p>TESTPAGINA</p>
 
-    <div id="status">
-      🟡 Klaar om mee te doen
-    </div>
+<button>IK DOE MEE</button>
 
-    <button id="meedoen">
-      🎵 IK DOE MEE
-    </button>
-
-    <p>
-      Tik eerst op <b>IK DOE MEE</b>.<br>
-      Daarna wacht je op Anne.
-    </p>
-
-  </div>
-
-  <script type="module">
-
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-    import {
-      getDatabase,
-      ref,
-      onValue
-    }
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-
-    const firebaseConfig = {
-
-      apiKey: "AIzaSyCudK8M09UAQFVWtRZIkGo2un_-hLDGW0o",
-
-      authDomain: "facetten-19.firebaseapp.com",
-
-      databaseURL:
-        "https://facetten-19-default-rtdb.europe-west1.firebasedatabase.app",
-
-      projectId: "facetten-19",
-
-      storageBucket:
-        "facetten-19.firebasestorage.app",
-
-      messagingSenderId:
-        "979120531869",
-
-      appId:
-        "1:979120531869:web:911d29ddd82d34bf41a774"
-
-    };
-
-
-    const app = initializeApp(firebaseConfig);
-
-    const database = getDatabase(app);
-
+</body>
+</html>
     const eventRef = ref(database, "event");
 
 
