@@ -64,6 +64,8 @@
       Daarna wacht je op Anne.
     </p>
 
+    <audio id="muziek" preload="auto"></audio>
+
   </div>
 
 
@@ -80,7 +82,7 @@
       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-    // Firebase instellingen
+    // Firebase
 
     const firebaseConfig = {
 
@@ -105,8 +107,6 @@
     };
 
 
-    // Firebase starten
-
     const app = initializeApp(firebaseConfig);
 
     const database = getDatabase(app);
@@ -114,7 +114,15 @@
     const eventRef = ref(database, "event");
 
 
-    // Knoppen en status
+    // Muziekbestand uit Google Drive
+
+    const muziek = document.getElementById("muziek");
+
+    muziek.src =
+      "https://drive.google.com/uc?export=download&id=1vXfzYKDWjK-ReJiKXEArjzxwm0_cLy8O";
+
+
+    // Knoppen
 
     const knop = document.getElementById("meedoen");
 
@@ -126,14 +134,31 @@
 
     // IK DOE MEE
 
-    knop.addEventListener("click", function() {
+    knop.addEventListener("click", async function() {
 
       meegedaan = true;
 
-      status.innerHTML =
-        "🟢 Je doet mee!<br>Wachten op Anne...";
+      muziek.volume = 0;
 
-      knop.style.display = "none";
+      try {
+
+        await muziek.play();
+
+        muziek.pause();
+
+        muziek.currentTime = 0;
+
+        status.innerHTML =
+          "🟢 Je doet mee!<br>Wachten op Anne...";
+
+        knop.style.display = "none";
+
+      } catch (error) {
+
+        status.innerHTML =
+          "🟠 Tik nogmaals op IK DOE MEE.";
+
+      }
 
     });
 
@@ -149,11 +174,7 @@
       }
 
 
-      // Anne heeft op START gedrukt
-
       if (data.command === "start" && data.startAt) {
-
-        // Deelnemer had nog niet op IK DOE MEE gedrukt
 
         if (!meegedaan) {
 
@@ -166,8 +187,6 @@
         }
 
 
-        // Berekenen hoeveel milliseconden we moeten wachten
-
         const wachten =
           data.startAt - Date.now();
 
@@ -176,12 +195,25 @@
           "🟢 Klaar... 🎵";
 
 
-        // Wachten tot het afgesproken startmoment
+        setTimeout(async function() {
 
-        setTimeout(function() {
+          muziek.currentTime = 0;
 
-          status.innerHTML =
-            "🎵 58 Facetten 19 speelt!";
+          muziek.volume = 1;
+
+          try {
+
+            await muziek.play();
+
+            status.innerHTML =
+              "🎵 58 Facetten 19 speelt!";
+
+          } catch (error) {
+
+            status.innerHTML =
+              "🔴 Muziek kon niet starten.";
+
+          }
 
         }, Math.max(0, wachten));
 
