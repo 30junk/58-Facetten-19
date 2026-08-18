@@ -9,7 +9,7 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 40px 20px;
+      padding: 30px 20px;
       background: #f5f5f5;
     }
 
@@ -25,9 +25,19 @@
       font-size: 32px;
     }
 
-    #status {
-      margin: 30px 0;
+    button {
       font-size: 24px;
+      padding: 20px 30px;
+      border: none;
+      border-radius: 15px;
+      background: #2196f3;
+      color: white;
+      margin: 20px 0;
+    }
+
+    #status {
+      margin: 25px 0;
+      font-size: 21px;
       font-weight: bold;
     }
   </style>
@@ -40,12 +50,19 @@
   <h1>🎵 58 Facetten 19</h1>
 
   <div id="status">
-    🟡 Klaar om te starten
+    🟡 Klaar om mee te doen
   </div>
 
+  <button id="meedoen">
+    🎵 IK DOE MEE
+  </button>
+
   <p>
-    De muziek begint wanneer Anne op START drukt.
+    Tik eerst op de knop.<br>
+    Daarna wacht je op Anne.
   </p>
+
+  <audio id="muziek" preload="auto" src="muziek.mp3"></audio>
 
 </div>
 
@@ -75,19 +92,79 @@ const database = getDatabase(app);
 
 const eventRef = ref(database, "event");
 
+const muziek = document.getElementById("muziek");
+const status = document.getElementById("status");
+const knop = document.getElementById("meedoen");
+
+let meegedaan = false;
+
+/*
+  De gebruiker tikt zelf op IK DOE MEE.
+  We starten de audio alvast stil.
+  Daardoor heeft de browser een gebruikersactie geregistreerd.
+*/
+
+knop.addEventListener("click", async () => {
+
+  meegedaan = true;
+
+  muziek.volume = 0;
+
+  try {
+    await muziek.play();
+
+    status.innerHTML =
+      "🟢 Je doet mee!<br>Wachten op Anne...";
+
+    knop.style.display = "none";
+
+  } catch (error) {
+
+    status.innerHTML =
+      "⚠️ Tik nogmaals op IK DOE MEE.";
+
+  }
+
+});
+
+
+/*
+  Luister voortdurend naar Firebase.
+*/
+
 onValue(eventRef, (snapshot) => {
 
   const data = snapshot.val();
 
-  if (data && data.command === "start") {
+  if (!data) {
+    return;
+  }
 
-    document.getElementById("status").innerHTML =
-      "🟢 START! 🎵";
+  if (data.command === "start" && data.startAt) {
 
-  } else {
+    if (!meegedaan) {
+      status.innerHTML =
+        "🟠 Anne is gestart.<br>Tik op IK DOE MEE om mee te doen.";
+      return;
+    }
 
-    document.getElementById("status").innerHTML =
-      "🟡 Klaar om te starten";
+    const startAt = data.startAt;
+    const nu = Date.now();
+    const wachten = startAt - nu;
+
+    status.innerHTML = "🟢 Klaar... 🎵";
+
+    setTimeout(() => {
+
+      muziek.currentTime = 0;
+      muziek.volume = 1;
+
+      muziek.play();
+
+      status.innerHTML =
+        "🎵 58 Facetten 19 speelt!";
+
+    }, Math.max(0, wachten));
 
   }
 
@@ -96,16 +173,7 @@ onValue(eventRef, (snapshot) => {
 </script>
 
 </body>
-</html>  <div class="kaart">
-    <h1>🎵 58 Facetten 19</h1>
-
-    <div id="status">
-      🟡 Wachten op Anne...
-    </div>
-
-    <p>
-      De muziek begint zodra Anne op START drukt.
-    </p>
+</html>    </p>
   </div>
 
   <script type="module">
