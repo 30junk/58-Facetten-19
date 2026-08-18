@@ -4,16 +4,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>58 Facetten 19</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    button {
+      font-size: 24px;
+      padding: 20px 30px;
+      border: none;
+      border-radius: 15px;
+      background: #2196f3;
+      color: white;
+    }
+
+    #status {
+      font-size: 21px;
+      margin: 25px;
+    }
+  </style>
 </head>
 
 <body>
 
   <h1>🎵 58 Facetten 19</h1>
 
-  <p>TESTPAGINA</p>
+  <div id="status">
+    🟡 Klaar om mee te doen
+  </div>
 
-  <button>IK DOE MEE</button>
+  <button id="meedoen">
+    🎵 IK DOE MEE
+  </button>
+
+  <p>
+    Tik eerst op IK DOE MEE.<br>
+    Daarna wacht je op Anne.
+  </p>
+
+
+  <script>
+
+    const knop = document.getElementById("meedoen");
+
+    const status = document.getElementById("status");
+
+
+    knop.addEventListener("click", function() {
+
+      status.innerHTML =
+        "🟢 Je doet mee!<br>Wachten op Anne...";
+
+      knop.style.display = "none";
+
+    });
+
+  </script>
 
 </body>
 
