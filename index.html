@@ -82,7 +82,7 @@
       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-    // Firebase
+    // Firebase instellingen
 
     const firebaseConfig = {
 
@@ -114,13 +114,13 @@
     const eventRef = ref(database, "event");
 
 
-    // Muziekbestand uit Google Drive
+    // Muziek uit GitHub
 
     const muziek = document.getElementById("muziek");
-muziek.src =
-  "https://drive.usercontent.google.com/download?id=1vXfzYKDWjK-ReJiKXEArjzxwm0_cLy8O&export=download";
 
-    // Knoppen
+    muziek.src =
+      "https://30junk.github.io/58-Facetten-19/muziek.mp3";
+
 
     const knop = document.getElementById("meedoen");
 
@@ -154,7 +154,7 @@ muziek.src =
       } catch (error) {
 
         status.innerHTML =
-          "🟠 Tik nogmaals op IK DOE MEE.";
+          "🔴 Muziek kon niet worden geladen.";
 
       }
 
